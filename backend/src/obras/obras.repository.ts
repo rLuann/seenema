@@ -35,10 +35,10 @@ export async function findById(id_obra: number): Promise<Obra | null> {
 
   const row = result.rows[0];
 
-  // Se não encontrar nenhuma obra com esse ID, retorna null para o Service tratar
+  
   if (!row) return null;
 
-  // Se encontrar, mapeia os dados do banco para a nossa classe
+  
   return new Obra(
     {
       titulo: row.titulo,

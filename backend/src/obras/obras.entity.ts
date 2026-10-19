@@ -40,7 +40,7 @@ export class Obra {
   public get sinopse(): string {
     return this._sinopse;
   }
-  public get tipo(): 'Filme' | 'Série' { // Getter para o novo campo
+  public get tipo(): 'Filme' | 'Série' { 
     return this._tipo;
   }
   public get poster(): string | null {
@@ -75,7 +75,7 @@ export class Obra {
   }
 
   public set tipo(value: 'Filme' | 'Série') {
-    // Garantindo que a classe aceite apenas os valores exatos do seu ENUM do banco
+    
     if (value !== 'Filme' && value !== 'Série') {
       throw new Error("O tipo da obra deve ser 'Filme' ou 'Série'.");
     }

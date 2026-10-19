@@ -5,12 +5,12 @@ export async function listAll() {
 }
 
 export async function getById(id: number) {
-  // Chamamos a função findById que acabamos de criar no repositório
+  
   const obra = await obrasRepository.findById(id);
   
   if (!obra) {
     const error = new Error("Obra não encontrada no catálogo.");
-    (error as any).statusCode = 404; // Código HTTP 404 para Not Found
+    (error as any).statusCode = 404; 
     throw error; 
   }
 
