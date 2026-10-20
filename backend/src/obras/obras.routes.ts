@@ -5,5 +5,6 @@ const router = Router();
 
 router.get("/api/obras", obrasController.getAll);
 router.get("/api/obras/:id", obrasController.getById);
+router.post("/api/obras", obrasController.create);
 
 export default router;

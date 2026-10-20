@@ -1,4 +1,5 @@
 import * as obrasRepository from "./obras.repository";
+import { Obra, ObraProps} from "./obras.entity"
 
 export async function listAll() {
   return obrasRepository.findAll();
@@ -15,4 +16,12 @@ export async function getById(id: number) {
   }
 
   return obra;
+}
+
+
+export async function create(props: ObraProps): Promise<Obra> {
+
+  const novaObra = new Obra(props);
+
+  return await obrasRepository.save(novaObra);
 }

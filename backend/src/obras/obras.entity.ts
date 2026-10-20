@@ -1,12 +1,13 @@
 export interface ObraProps {
   titulo: string;
   sinopse: string;
-  tipo: 'Filme' | 'Série'; 
-  poster?: string;
-  num_episodios?: number;
-  num_temporada?: number;
-  ano_lancamento?: number;
+  tipo: 'Filme' | 'Série';
+  poster?: string | null;          
+  num_episodios?: number | null;   
+  num_temporada?: number | null;   
+  ano_lancamento?: number | null;  
 }
+
 
 export class Obra {
   private _id_obra: number;
@@ -111,3 +112,4 @@ export class Obra {
   }
 
 }
+

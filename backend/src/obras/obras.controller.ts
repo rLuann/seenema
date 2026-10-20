@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import * as obrasService from "./obras.service";
+import { Obra, ObraProps} from "./obras.entity"
+
 
 export async function getAll(req: Request, res: Response, next: NextFunction) {
   try {
@@ -50,6 +52,59 @@ export async function getById(req: Request, res: Response, next: NextFunction) {
       ano_lancamento: obra.ano_lancamento
     });
 
+  } catch (error: any) {
+    next(error); 
+  }
+}
+
+export async function create(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { 
+      titulo, 
+      sinopse, 
+      tipo, 
+      poster, 
+      num_episodios, 
+      num_temporada, 
+      ano_lancamento 
+    } = req.body;
+
+  
+    if (!titulo || !sinopse || !tipo) {
+      const error = new Error("Campos obrigatórios ausentes. É necessário enviar 'titulo', 'sinopse' e 'tipo'.");
+      (error as any).statusCode = 400;      
+      next(error);
+      return;
+    }
+   
+
+    const obraData: ObraProps = {
+      titulo,
+      sinopse,
+      tipo,
+      poster,
+      num_episodios: num_episodios ? Number(num_episodios) : undefined,
+      num_temporada: num_temporada ? Number(num_temporada) : undefined,
+      ano_lancamento: ano_lancamento ? Number(ano_lancamento) : undefined
+    };
+
+  
+    const createdObra = await obrasService.create(obraData);
+
+   
+    res.status(201).json({
+      message: "Obra criada com sucesso!",
+      obra: {
+        id_obra: createdObra.id_obra,
+        titulo: createdObra.titulo,
+        sinopse: createdObra.sinopse,
+        tipo: createdObra.tipo,
+        poster: createdObra.poster,
+        num_episodios: createdObra.num_episodios,
+        num_temporada: createdObra.num_temporada,
+        ano_lancamento: createdObra.ano_lancamento
+      }
+    });
   } catch (error: any) {
     next(error); 
   }
