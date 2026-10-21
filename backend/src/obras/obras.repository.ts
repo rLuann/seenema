@@ -68,7 +68,6 @@ export async function save(obra: Obra): Promise<Obra> {
     RETURNING id_obra;
   `;
 
-
   const values = [
     obra.titulo,
     obra.sinopse,
@@ -79,12 +78,8 @@ export async function save(obra: Obra): Promise<Obra> {
     obra.ano_lancamento
   ];
 
-
   const result = await pool.query(query, values);
-  
-
   const insertedId = result.rows[0].id_obra;
-
 
   return new Obra(
     {
@@ -98,4 +93,55 @@ export async function save(obra: Obra): Promise<Obra> {
     },
     insertedId
   );
+}
+
+export async function update(obra: Obra): Promise<Obra> {
+  const query = `
+    UPDATE obra
+    SET 
+      titulo = $1, 
+      sinopse = $2, 
+      tipo = $3, 
+      poster = $4, 
+      num_episodios = $5, 
+      num_temporada = $6, 
+      ano_lancamento = $7
+    WHERE id_obra = $8
+    RETURNING id_obra;
+  `;
+
+  const values = [
+    obra.titulo,
+    obra.sinopse,
+    obra.tipo,
+    obra.poster,
+    obra.num_episodios,
+    obra.num_temporada,
+    obra.ano_lancamento,
+    obra.id_obra 
+  ];
+
+  const result = await pool.query(query, values);
+
+  return new Obra(
+    {
+      titulo: obra.titulo,
+      sinopse: obra.sinopse,
+      tipo: obra.tipo,
+      poster: obra.poster ?? undefined,
+      num_episodios: obra.num_episodios ?? undefined,
+      num_temporada: obra.num_temporada ?? undefined,
+      ano_lancamento: obra.ano_lancamento ?? undefined
+    },
+    result.rows[0].id_obra
+  );
+}
+
+export async function remove(id_obra: number): Promise<void> {
+  const query = `
+    DELETE FROM obra 
+    WHERE id_obra = $1;
+  `;
+
+  await pool.query(query, [id_obra]);
 }
