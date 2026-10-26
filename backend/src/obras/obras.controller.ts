@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import * as obrasService from "./obras.service";
-import { Obra, ObraProps} from "./obras.entity"
-
+import { Obra, ObraProps} from "./obras.entity";
+import { AppError } from "../errors/AppError"; 
 
 export async function getAll(req: Request, res: Response, next: NextFunction) {
   try {
@@ -28,9 +28,7 @@ export async function getById(req: Request, res: Response, next: NextFunction) {
     const obraId = Number(req.params.id);
 
     if (isNaN(obraId)) {
-      const error = new Error("ID da obra inválido. Deve ser um número.");
-      (error as any).statusCode = 400; 
-      next(error);
+      next(new AppError("ID da obra inválido. Deve ser um número.", 400, "BAD_REQUEST"));
       return;
     }
 
@@ -66,9 +64,7 @@ export async function create(req: Request, res: Response, next: NextFunction) {
 
   
     if (!titulo || !sinopse || !tipo) {
-      const error = new Error("Campos obrigatórios ausentes. É necessário enviar 'titulo', 'sinopse' e 'tipo'.");
-      (error as any).statusCode = 400;      
-      next(error);
+      next(new AppError("Campos obrigatórios ausentes. É necessário enviar 'titulo', 'sinopse' e 'tipo'.", 400, "BAD_REQUEST"));
       return;
     }
    
@@ -107,9 +103,7 @@ export async function update(req: Request, res: Response, next: NextFunction) {
     const obraId = Number(req.params.id);
 
     if (isNaN(obraId)) {
-      const error = new Error("ID da obra inválido. Deve ser um número.");
-      (error as any).statusCode = 400;
-      next(error);
+      next(new AppError("ID da obra inválido. Deve ser um número.", 400, "BAD_REQUEST"));
       return;
     }
 
@@ -124,9 +118,7 @@ export async function update(req: Request, res: Response, next: NextFunction) {
     } = req.body;
 
     if (!titulo || !sinopse || !tipo) {
-      const error = new Error("Campos obrigatórios ausentes. Envie 'titulo', 'sinopse' e 'tipo'.");
-      (error as any).statusCode = 400;      
-      next(error);
+      next(new AppError("Campos obrigatórios ausentes. Envie 'titulo', 'sinopse' e 'tipo'.", 400, "BAD_REQUEST"));
       return;
     }
 
@@ -165,9 +157,7 @@ export async function remove(req: Request, res: Response, next: NextFunction) {
     const obraId = Number(req.params.id);
 
     if (isNaN(obraId)) {
-      const error = new Error("ID da obra inválido. Deve ser um número.");
-      (error as any).statusCode = 400;
-      next(error);
+      next(new AppError("ID da obra inválido. Deve ser um número.", 400, "BAD_REQUEST"));
       return;
     }
 
