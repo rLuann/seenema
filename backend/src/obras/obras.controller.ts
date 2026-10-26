@@ -1,7 +1,68 @@
 import { Request, Response, NextFunction } from "express";
 import * as obrasService from "./obras.service";
-import { Obra, ObraProps} from "./obras.entity";
-import { AppError } from "../errors/AppError"; 
+import { Obra, ObraProps } from "./obras.entity";
+import { AppError } from "../errors/AppError";
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Obra:
+ *       type: object
+ *       required:
+ *         - titulo
+ *         - sinopse
+ *         - tipo
+ *       properties:
+ *         id_obra:
+ *           type: integer
+ *           description: ID gerado automaticamente no banco de dados
+ *         titulo:
+ *           type: string
+ *           description: Título da obra
+ *         sinopse:
+ *           type: string
+ *           description: Sinopse descritiva
+ *         tipo:
+ *           type: string
+ *           enum: [Filme, Série]
+ *           description: Define se a obra é um filme ou série
+ *         poster:
+ *           type: string
+ *           description: URL da imagem hospedada no Supabase
+ *         num_episodios:
+ *           type: integer
+ *           description: Quantidade de episódios (Obrigatório para Séries)
+ *         num_temporada:
+ *           type: integer
+ *           description: Número da temporada (Obrigatório para Séries)
+ *         ano_lancamento:
+ *           type: integer
+ *           description: Ano de lançamento da obra
+ *       example:
+ *         titulo: "Lanterna Verde: A Série Animada"
+ *         sinopse: "As aventuras de Hal Jordan e seu parceiro Kilowog na fronteira do espaço."
+ *         tipo: "Série"
+ *         poster: "https://hnyjdcgfalqqmucukrtw.supabase.co/storage/v1/object/public/posters/lanterna_verde_img.jpg"
+ *         num_episodios: 26
+ *         num_temporada: 1
+ *         ano_lancamento: 2011
+ * 
+ *     ErroPadrao:
+ *       type: object
+ *       properties:
+ *         error:
+ *           type: object
+ *           properties:
+ *             code:
+ *               type: string
+ *             message:
+ *               type: string
+ *       example:
+ *         error:
+ *           code: "BAD_REQUEST"
+ *           message: "Campos obrigatórios ausentes. É necessário enviar 'titulo', 'sinopse' e 'tipo'."
+ */
 
 export async function getAll(req: Request, res: Response, next: NextFunction) {
   try {
