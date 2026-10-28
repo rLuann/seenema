@@ -59,10 +59,12 @@ router.get("/api/obras/:id", obrasController.getById);
 
 /**
  * @swagger
- * /obras:
+ * /api/obras:
  *   post:
  *     summary: Adiciona uma nova obra ao catálogo
  *     tags: [Obras]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -74,10 +76,8 @@ router.get("/api/obras/:id", obrasController.getById);
  *         description: Obra criada com sucesso
  *       400:
  *         description: Falha na validação dos dados obrigatórios (título, sinopse, tipo)
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErroPadrao'
+ *       401:
+ *         description: Não autorizado (Token JWT ausente ou inválido)
  */
 router.post("/api/obras", requireAuth, obrasController.create);
 

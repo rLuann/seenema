@@ -6,7 +6,7 @@ const swaggerOptions: Options = {
     info: {
       title: "API do SEEnema",
       version: "1.0.0", 
-      description: "Documentação da API de gerenciamento do catálogo de filmes e séries do SEEnema.", // Descrição atualizada
+      description: "Documentação da API de gerenciamento do catálogo de filmes e séries do SEEnema.",
     },
     servers: [
       {
@@ -14,6 +14,16 @@ const swaggerOptions: Options = {
         description: "Servidor Local",
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+          description: "Insira o token JWT aqui (apenas o token, sem a palavra Bearer)",
+        },
+      },
+    },
   },
 
   apis: [

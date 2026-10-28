@@ -12,7 +12,7 @@ const app = express();
 
 app.use(express.json()); 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use(authRoutes);
+app.use("/auth", authRoutes);
 app.use(obrasRoutes);
 app.use((req: Request, res: Response, next: NextFunction) => {
   const err: AppError = new AppError("A rota solicitada não existe.", 404, "ROUTE_NOT_FOUND");
