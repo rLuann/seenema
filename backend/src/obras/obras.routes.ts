@@ -1,5 +1,6 @@
 import { Router } from "express";
 import * as obrasController from "./obras.controller";
+import { requireAuth } from "../auth/auth.middleware";
 
 const router = Router();
 
@@ -78,7 +79,7 @@ router.get("/api/obras/:id", obrasController.getById);
  *             schema:
  *               $ref: '#/components/schemas/ErroPadrao'
  */
-router.post("/api/obras", obrasController.create);
+router.post("/api/obras", requireAuth, obrasController.create);
 
 /**
  * @swagger
