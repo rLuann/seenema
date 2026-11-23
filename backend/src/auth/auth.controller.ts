@@ -4,20 +4,15 @@ import { AppError } from "../errors/AppError";
 
 export async function login(req: Request, res: Response, next: NextFunction) {
   try {
-   
-    const { email, senha } = req.body;
+    const { email, senha } = req.body || {};
 
     if (!email || !senha) {
- 
-      next(new AppError("E-mail e senha são obrigatórios.", 400, "BAD_REQUEST"));
-      return; 
+      return next(new AppError("E-mail e senha são obrigatórios.", 400, "BAD_REQUEST"));
     }
 
     const result = await authService.login(email, senha);
-
     res.status(200).json(result);
-
-  } catch (error: any) {
+  } catch (error) {
     next(error);
   }
 }
