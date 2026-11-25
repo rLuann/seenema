@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express, { Request, Response, NextFunction } from "express";
+import cors from "cors";
 import obrasRoutes from "./obras/obras.routes";
 import usuariosRoutes from "./usuario/usuario.routes";
 import generoRoutes from "./genero/genero.routes";
@@ -14,6 +15,12 @@ import { AppError } from "./errors/AppError";
 import { authRoutes } from "./auth/auth.routes";
 const config = loadConfig();
 const app = express();
+
+app.use(cors({
+  origin: ["http://127.0.0.1:5500", "http://localhost:5500"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
 
 app.use(express.json()); 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
